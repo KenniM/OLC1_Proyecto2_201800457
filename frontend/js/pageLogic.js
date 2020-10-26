@@ -1,7 +1,7 @@
 var contadorPestanias=2,
     arregloPestanias=new Array(),
     tabActual=1;
-    var EditSession = require(["src/edit_session"]).EditSession;
+    var EditSession = ace.require(["src/edit_session"]).EditSession;
 
 function addTab(){
     var nombre="Pestaña "+contadorPestanias;

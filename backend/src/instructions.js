@@ -46,6 +46,7 @@ const TIPO_INSTRUCCION ={
     CLASS:                      'INSTR_DECLARACION_CLASE',
     VOID:                       'INSTR_DECLARACION_FUNCION',
     METHOD:                     'INSTR_DECLARACION_METODO',
+    MAIN:                       'INSTR_DECLARACION_MAIN',
     BREAK:                      'INSTR_BREAK',
     CONTINUE:                   'INSTR_CONTINUE',
     LLAMADA_FUNCION:            'INSTR_LLAMADA_FUNCION',
@@ -145,6 +146,13 @@ const INSTRUCCIONES_API = {
             Tipo:TIPO_INSTRUCCION.ASIGNACION,
             ID:id,
             Expresion:expresion
+        }
+    },
+    nuevoMain:function(parametro,instrucciones){
+        return{
+            Tipo:TIPO_INSTRUCCION.MAIN,
+            Nombre_Paramatero:parametro,
+            Lista_Instrucciones:instrucciones
         }
     },
     nuevoIf:function(condicion,instruccionesThen,instruccionesElse){
