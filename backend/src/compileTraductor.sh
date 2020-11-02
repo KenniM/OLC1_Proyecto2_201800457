@@ -1,6 +1,6 @@
 echo "Procesando gramática..."
 
-jison grammar.jison
+jison translator.jison
 
 
 echo "Gramática procesada..."

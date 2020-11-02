@@ -3,8 +3,12 @@
 %{
 let modoPanico = false,
     contador = 1,
+    contadorTokens=1,
     errores = new Array();
+    listaTokens = new Array();
 module.exports.errores = errores;
+module.exports.listaTokens = listaTokens;
+exports.vaciar = function () { listaTokens=[];contador=1; };
 %}
 
 /* DEFINICIÓN LÉXICA */
@@ -15,84 +19,77 @@ numero [0-9]+                       // ER PARA RECONOCER NUMEROS ENTEROS
 decimal {numero}("."{numero})       // ER PARA RECONOCER NUMEROS DECIMALES
 caracter ('.')                      // ER PARA RECONOCER UN SOLO CARACTER
 cadena (\"[^"]*\")                  // ER PARA RECONOCER CADENAS DE TEXTO
-identificador ([a-zA-Z_])[a-zA-Z0-9_]*  // ER PARA RECONOCER IDENTIFICADORES
+identificador ([a-zA-ZnÑ_])[a-zA-Z0-9ñÑ_]*  // ER PARA RECONOCER IDENTIFICADORES
 
 %%
 "//".*						        /* IGNORAR COMENTARIOS */
 [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/] /* IGNORAR COMENTARIOS */
 \s+                                 // IGNORAR ESPACIOS EN BLANCO
-"public"                return 'RES_PUBLIC';
-"class"                 return 'RES_CLASS';
-"interface"             return 'RES_INTERFACE';
-"int"                   return 'RES_INT';
-"boolean"               return 'RES_BOOLEAN';
-"double"                return 'RES_DOUBLE';
-"String"                return 'RES_STRING';
-"char"                  return 'RES_CHAR';
-"true"                  return 'RES_TRUE';
-"false"                 return 'RES_FALSE';
-"static"                return 'RES_STATIC';
-"void"                  return 'RES_VOID';
-"main"                  return 'RES_MAIN';
-"for"                   return 'RES_FOR';
-"while"                 return 'RES_WHILE';
-"System"                return 'RES_SYSTEM';
-"out"                   return 'RES_OUT';
-"println"               return 'RES_PRINTLN';
-"print"                 return 'RES_PRINT';
-"do"                    return 'RES_DO';
-"if"                    return 'RES_IF';
-"else"                  return 'RES_ELSE';
-"break"                 return 'RES_BREAK';
-"continue"              return 'RES_CONTINUE';
-"return"                return 'RES_RETURN';
-"&&"                    return 'RES_AND';
-"||"                    return 'RES_OR';
-"!"                     return 'RES_NOT';
-"^"                     return 'RES_XOR'
-">="                    return '>=';
-"<="                    return '<=';
-">"                     return '>';
-"<"                     return '<';
-"=="                    return '==';
-"!="                    return '!=';
-"."                     return '.';
-";"                     return ';';
-","                     return ',';
-"("                     return '(';
-")"                     return ')';
-"["                     return '[';
-"]"                     return ']';
-"{"                     return '{';
-"}"                     return '}';
-"++"                    return '++';
-"--"                    return '--';
-"+"                     return '+';
-"-"                     return '-';
-"*"                     return '*';
-"/"                     return '/';
-"="                     return '=';
-{decimal}               return 'DECIMAL';
-{numero}                return 'NUMERO';
-{identificador}         return 'ID';
-{caracter}              return 'CHAR';
-{cadena}                return 'CADENA_TEXTO';
+"public"                {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_PUBLIC</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_PUBLIC';}
+"class"                 {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_CLASS</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_CLASS';}
+"interface"             {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_INTERFACE</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_INTERFACE';}
+"int"                   {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_INT</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_INT';}
+"boolean"               {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_BOOLEAN</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_BOOLEAN';}
+"double"                {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_DOUBLE</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_DOUBLE';}
+"String"                {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_STRING</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_STRING';}
+"char"                  {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_CHAR</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_CHAR';}
+"true"                  {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_TRUE</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_TRUE';}
+"false"                 {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_FALSE</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_FALSE';}
+"static"                {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_STATIC</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_STATIC';}
+"void"                  {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_VOID</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_VOID';}
+"main"                  {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_MAIN</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_MAIN';}
+"for"                   {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_FOR</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_FOR';}
+"while"                 {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_WHILE</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_WHILE';}
+"System"                {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_SYSTEM</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_SYSTEM';}
+"out"                   {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_OUT</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_OUT';}
+"println"               {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_PRINTLN</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_PRINTLN';}
+"print"                 {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_PRINT</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_PRINT';}
+"do"                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_DO</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_DO';}
+"if"                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_IF</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_IF';}
+"else"                  {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_ELSE</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_ELSE';}
+"break"                 {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_BREAK</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_BREAK';}
+"continue"              {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_CONTINUE</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_CONTINUE';}
+"return"                {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_RETURN</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_RETURN';}
+"&&"                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_AND</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_AND';}
+"||"                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_OR</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_OR';}
+"!"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_NOT</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_NOT';}
+"^"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_XOR</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_XOR'}
+">="                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>>=</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '>=';}
+"<="                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td><=</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '<=';}
+">"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>></td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '>';}
+"<"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td><</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '<';}
+"=="                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>==</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '==';}
+"!="                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>!=</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '!=';}
+"."                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>.</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '.';}
+";"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>;</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return ';';}
+","                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>,</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return ',';}
+"("                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>(</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '(';}
+")"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>)</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return ')';}
+"["                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>[</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '[';}
+"]"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>]</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return ']';}
+"{"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>{</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '{';}
+"}"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>}</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '}';}
+"++"                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>++</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '++';}
+"--"                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>--</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '--';}
+"+"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>+</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '+';}
+"-"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>-</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '-';}
+"*"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>*</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '*';}
+"/"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>/</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '/';}
+"="                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>=</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '=';}
+{decimal}               {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>DECIMAL</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'DECIMAL';}
+{numero}                {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>NUMERO</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'NUMERO';}
+{identificador}         {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>ID</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'ID';}
+{caracter}              {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>CHAR</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'CHAR';}
+{cadena}                {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>CADENA_TEXTO</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'CADENA_TEXTO';}
 <<EOF>>                 return 'EOF';
 
 // MANEJO DEL ERROR LEXICO
 .   {
     let fila=yylloc.first_line;
     let columna=yylloc.first_column+1;
-    let nuevoError= "<td><center>" + contador.toString() + "</center></td>\n" +
-                "<td><center>Léxico</center></td>\n" +
-                "<td><center>" + fila + "</center></td>\n" +
-                "<td><center>" + columna + "</center></td>\n" +
-                "<td><center>El caracter \"" + yytext + "\" no pertenece al lenguaje</center></td>\n" +
-                "</tr>\n" +
-                "</center>\n";
+    let nuevoError= contador.toString() + ". ERROR LÉXICO: El caracter \"" + yytext + "\" no pertenece al lenguaje, en la línea "+fila+", columna "+columna+".\n";
 	contador+=1;
 	errores.push(nuevoError);
-	console.log('Error lexico: \'' + yytext + '\'. En fila: ' + fila + ', columna: ' + columna + '.');
 }
 
 /lex
@@ -123,22 +120,39 @@ const API=require('./instructions').INSTRUCCIONES_API;
 // DEFINICION SINTACTICA
 %%
 
-INICIO:                 DEFINICION_CLASE EOF {return $1;}
+INICIO:                 SET_INSTRUCCIONES EOF {return $1;}
+                    ;
+
+SET_INSTRUCCIONES:      SET_INSTRUCCIONES DEFINICION_CLASE{$1.push($2);$$=$1;}
+                    |   DEFINICION_CLASE {$$=[$1];}
                     ;
 DEFINICION_CLASE:       'RES_PUBLIC' 'RES_CLASS' 'ID' '{' INSTRUCCIONES_CLASE '}'           {$$=API.nuevaClase($3,$5);}
                     |   'RES_PUBLIC' 'RES_CLASS' 'ID' '{'  '}'                              {$$=API.nuevaClase($3,[]);}
+                    |   'RES_PUBLIC' 'RES_INTERFACE' 'ID' '{' DEFINICIONES_INTERFAZ '}'     {$$=API.nuevaInterfaz($3,$5);}
+                    |   'RES_PUBLIC' 'RES_INTERFACE' 'ID' '{' '}'                           {$$=API.nuevaInterfaz($3,[]);}
+                    |   error {let nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");}
                     ;
+DEFINICIONES_INTERFAZ:  DEFINICIONES_INTERFAZ DEFINICION_INTERFAZ                           {$1.push($2);$$=$1;}
+                    |   DEFINICION_INTERFAZ                                                 {$$=[$1];}
+                    ;
+DEFINICION_INTERFAZ:    'RES_PUBLIC' 'RES_VOID' 'ID' '(' ')' ';'                            {$$=API.nuevaDefVoid($3);}
+                    |   'RES_PUBLIC' 'RES_VOID' 'ID' '(' LISTA_PARAM ')' ';'                {$$=API.nuevaDefVoidParametrizado($3,$5);}
+                    |   'RES_PUBLIC' TIPO 'ID' '(' ')' ';'                                  {$$=API.nuevaDefMetodo($2,$3);}
+                    |   'RES_PUBLIC' TIPO 'ID' '(' LISTA_PARAM ')' ';'                      {$$=API.nuevaDefMetodoParametrizado($2,$3,$5);}
+                    |   error {let nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");}
+                    ;    
 INSTRUCCIONES_CLASE:     INSTRUCCIONES_CLASE INSTRUCCION_CLASE                              {$1.push($2);$$=$1;}
                     |   INSTRUCCION_CLASE                                                   {$$=[$1];}
                     ;
-INSTRUCCION_CLASE:      'RES_PUBLIC' 'RES_VOID' 'ID' '(' ')' BLOQUE_INSTRUCCIONES                       {$$=API.nuevoVoid($2,$5);}
-                    |   'RES_PUBLIC' 'RES_VOID' 'ID' '(' LISTA_PARAM ')' BLOQUE_INSTRUCCIONES           {$$=API.nuevoVoidParametrizado($2,$4,$6);}
-                    |   'RES_PUBLIC' TIPO 'ID' '(' ')' BLOQUE_INSTRUCCIONES                             {$$=API.nuevoMetodo($1,$2,$5);}
-                    |   'RES_PUBLIC' TIPO 'ID' '(' LISTA_PARAM ')' BLOQUE_INSTRUCCIONES                 {$$=API.nuevoMetodoParametrizado($1,$2,$4,$6);}
+INSTRUCCION_CLASE:      'RES_PUBLIC' 'RES_VOID' 'ID' '(' ')' BLOQUE_INSTRUCCIONES                       {$$=API.nuevoVoid($3,$6);}
+                    |   'RES_PUBLIC' 'RES_VOID' 'ID' '(' LISTA_PARAM ')' BLOQUE_INSTRUCCIONES           {$$=API.nuevoVoidParametrizado($3,$5,$7);}
+                    |   'RES_PUBLIC' TIPO 'ID' '(' ')' BLOQUE_INSTRUCCIONES                             {$$=API.nuevoMetodo($2,$3,$6);}
+                    |   'RES_PUBLIC' TIPO 'ID' '(' LISTA_PARAM ')' BLOQUE_INSTRUCCIONES                 {$$=API.nuevoMetodoParametrizado($2,$3,$5,$7);}
                     |   'RES_PUBLIC' 'RES_STATIC' 'RES_VOID' 'RES_MAIN' '(' 'RES_STRING' '[' ']' 'ID' ')' BLOQUE_INSTRUCCIONES {$$=API.nuevoMain($9,$11);}
                     |   LLAMADA_FUNCION ';'
                     |   DECLARACION                                                         {$$=$1;}
                     |   ASIGNACION                                                          {$$=$1;}
+                    |   error {let nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");}
                     ;
                     
 LISTA_PARAM:            LISTA_PARAM ',' PARAMETRO                                           {$1.push($3);$$=$1;}
@@ -175,16 +189,9 @@ ERROR_INSTRUCCIONES:error
     if($1!=';' && !modoPanico){
 			let row = this._$.first_line;
 			let column = this._$.first_column + 1;
-			let newError = "<td><center>" + contador.toString() + "</center></td>\n" +
-                "<td><center>Sintáctico</center></td>\n" +
-                "<td><center>" + row + "</center></td>\n" +
-                "<td><center>" + column + "</center></td>\n" +
-                "<td><center>Se esperaba el inicio de una instrucción valida pero se obtuvo \"" + $1 + "\" </center></td>\n" +
-                "</tr>\n" +
-                "</center>\n";
+			let newError = contador.toString() + ". Se esperaba el inicio de una instrucción valida pero se obtuvo \"" + $1 + "\" en la línea "+row+", columna "+column+".\n";
 			contador+=1;
 			errores.push(newError);
-			console.log('Este es un error sintactico: ' + $1 + '. En la linea: '+ this._$.first_line + ', columna: '+this._$.first_column);
 			modoPanico = true;
         }
 		else if($1==';'){
@@ -254,4 +261,5 @@ EXPRESION:              EXPRESION '+' EXPRESION   { $$ = API.nuevaOperBinaria($1
 		            |  	'RES_FALSE'					{ $$ = API.nuevoValor($1, TIPO_VALOR.FALSE); }
                     |   '(' EXPRESION ')'          { $$ = $2; }
                     |   LLAMADA_FUNCION               { $$ = $1; }
+                    |   error {let nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");}
                     ;

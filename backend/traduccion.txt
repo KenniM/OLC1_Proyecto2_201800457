@@ -1,0 +1,65 @@
+class Myclase{
+	var variable,variable1,variable2;
+var constante = 100 / 5 * 5 / 5 + 3 + 2 - 1 * 0 + 1;
+function MyMetodo(){
+	 var nombre = "myMetodo";
+var x,y;
+x = 10;
+y = 11;
+var variable = 3 + 3 - 5 / 5 * 10;
+console.log("myMetodo");
+console.log(x);
+
+}
+ function MyMetodo2(x){
+	 var valor = x;
+console.log(x);
+for(var f; x <= f;f++){
+	 console.log("HOla");
+
+}
+ 
+//hola
+
+
+}
+ function Contador(){
+	 var contador = 0;
+do {
+	 console.log("Contador" + (contador + 1));
+
+}
+  while (contador < 10);
+
+console.log(contador + "va aumentando");
+
+}
+ function main(){
+	 console.log("ESTE ES EL MAIN");
+
+}
+ function testif(valor){
+	 var contador = valor;
+if(valor == 10){
+	 //imprime
+
+for(var f; x <= f;f++){
+	 console.log(f);
+
+}
+ 
+
+}
+  else if(valor > 10){
+	 console.log("x");
+
+}
+  else{
+	 console.log("x");
+
+}
+ 
+
+}
+ 
+}

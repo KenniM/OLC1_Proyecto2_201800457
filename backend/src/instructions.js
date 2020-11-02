@@ -44,6 +44,7 @@ const TIPO_INSTRUCCION ={
     ELSE:                       'INSTR_ELSE',
     FOR:                        'INSTR_FOR',
     CLASS:                      'INSTR_DECLARACION_CLASE',
+    INTERFACE:                  'INSTR_DECLARACION_INTERFACE',
     VOID:                       'INSTR_DECLARACION_FUNCION',
     METHOD:                     'INSTR_DECLARACION_METODO',
     MAIN:                       'INSTR_DECLARACION_MAIN',
@@ -80,6 +81,41 @@ const INSTRUCCIONES_API = {
             Tipo:TIPO_INSTRUCCION.CLASS,
             ID_Clase:idClase,
             Lista_Instrucciones:instrucciones
+        }
+    },
+    nuevaInterfaz:function(idInterfaz,definiciones){
+        return{
+            Tipo:TIPO_INSTRUCCION.INTERFACE,
+            ID_Interfaz:idInterfaz,
+            Lista_Definiciones:definiciones
+        }
+    },
+    nuevaDefVoid:function(idVoid){
+        return{
+            Tipo:TIPO_INSTRUCCION.VOID,
+            ID_Funcion:idVoid
+        }
+    },
+    nuevaDefVoidParametrizado:function(idVoid,parametros){
+        return{
+            Tipo:TIPO_INSTRUCCION.VOID,
+            ID_Funcion:idVoid,
+            Lista_parametros:parametros
+        }
+    },
+    nuevaDefMetodo:function(tipo,idMetodo){
+        return{
+            Tipo:TIPO_INSTRUCCION.METHOD,
+            Tipo_dato:tipo,
+            ID_Funcion:idMetodo
+        }
+    },
+    nuevaDefMetodoParametrizado:function(tipo,idMetodo,parametros){
+        return{
+            Tipo:TIPO_INSTRUCCION.METHOD,
+            Tipo_dato:tipo,
+            ID_Funcion:idMetodo,
+            Lista_parametros:parametros
         }
     },
     nuevoVoid:function(idVoid,instrucciones){
@@ -158,7 +194,7 @@ const INSTRUCCIONES_API = {
     nuevoIf:function(condicion,instruccionesThen,instruccionesElse){
         return{
             Tipo:TIPO_INSTRUCCION.IF,
-            Expresion:condicion,
+            Expresion_Logica:condicion,
             Then:instruccionesThen,
             Else:instruccionesElse
         }

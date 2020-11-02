@@ -11,11 +11,23 @@
     <style type="text/css" media="screen">
         #editor1 { 
             position: relative;
-            top: 10px;
-            left: 10px;
-            width: 700px;
-            height: 550px;
-            max-height: 550px;
+            
+            height: 225px;
+            max-height: 225px;
+            overflow: hidden;
+        }
+        #salidaJS { 
+            position: relative;
+            
+            height: 180px;
+            max-height: 180px;
+            overflow: hidden;
+        }
+        #salidaPy { 
+            position: relative;
+            
+            height: 180px;
+            max-height: 180px;
             overflow: hidden;
         }
     </style>
@@ -46,22 +58,20 @@
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Archivo</a>
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="#" onclick="addTab(1)">Nueva pestaña</a>
-                <a class="dropdown-item" href="#">Abrir archivo...</a>
+                <a class="dropdown-item" href="#">Abrir archivo...
+                  <input id="fileInput" type="file" accept=".java">
+                </a>
                 <a class="dropdown-item" href="#">Guardar archivo actual</a>
                 <!--div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Separated link</a-->
               </div>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" spellcheck="false" data-ms-editor="true">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-          </form>
         </div>
       </nav>
       <ul class="nav nav-tabs" id="pestaniasT">
         <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#home">Pestaña 1</a>
+          <a id="Pestaña1"class="nav-link active" data-toggle="tab" href="#home" onclick="changeTab(1)">Pestaña 1</a>
         </li>
       </ul>
       <div id="myTabContent" class="tab-content">
@@ -77,7 +87,11 @@
           <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
         </div>
       </div>
-      <div id="editor1">public class Myclase { 
+      <div class="container">
+        <div class="row">
+          <div class="col">Entrada en Java</div>
+          <div class="w-100"></div>
+      <div id="editor1" class="col">public class Myclase { 
     
         String variable, variable1,variable2;
         int constante=100/5*5/5+3+2-1*0+1;
@@ -135,10 +149,58 @@
       }
     
     }</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col">Salida en JavaScript</div>
+    <div class="col">Salida en Python</div>
+    <div class="w-100"></div>
+    <div id="salidaJS" class="col">
+      /*La salida en el lenguaje JS se mostrará aquí*/
+    </div>
+    <div id="salidaPy" class="col">
+      '''La salida en el lenguaje Python se mostrará aquí'''
+    </div>
+
+  </div>
+  <br>
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" onclick="verTokens()">
+  Ver lista de Tokens
+</button>
+<style>
+  @media screen and (min-width: 676px) {
+      .modal-dialog {
+        max-width: 1000px; /* New width for default modal */
+      }
+  }
+</style>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white" id="exampleModalLabel">Lista de Tokens</h5>
+        <button type="button" class="close btn-danger text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="ContenidoMsg">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
     <script src="./js/jquery.min.js"></script>
     <script src="/js/pageLogic.js" type="text/javascript" charset="utf-8"></script>
       <script src="/js/src/ace.js" type="text/javascript" charset="utf-8"></script>
       <script>
+        var bodyMsg=document.getElementById("ContenidoMsg");
+        var tituloMsg=document.getElementById("exampleModalLabel");
         var editor = ace.edit("editor1");
         editor.setTheme("ace/theme/monokai");
         editor.session.setMode("ace/mode/java");
@@ -147,27 +209,103 @@
             copyWithEmptySelection: true,
         });
 
+        var salJS = ace.edit("salidaJS");
+        var beautify = ace.require("ace/ext/beautify"); // get reference to extension
+        salJS.setTheme("ace/theme/monokai");
+        salJS.session.setMode("ace/mode/javascript");
+        salJS.setOptions({
+            autoScrollEditorIntoView: false,
+            copyWithEmptySelection: true,
+        });
+        salJS.setReadOnly(true);
+
+        var salPy = ace.edit("salidaPy");
+        salPy.setTheme("ace/theme/monokai");
+        salPy.session.setMode("ace/mode/python");
+        salPy.setOptions({
+            autoScrollEditorIntoView: false,
+            copyWithEmptySelection: true,
+        });
+        salPy.setReadOnly(true);
+
         let errorsArray = [];
+        function verTokens(){
+          
+    var getTokens = 'http://localhost:8080/GetTokens/';
+    var dataAsJson = {
+        input: editor.getValue()
+    };
+    $.post(getTokens, dataAsJson, function (data, status) {
+        if (data.length != 0) {
+          tituloMsg.innerHTML="Lista de Tokens";
+          let contenidoTokens=data;
+          bodyMsg.innerHTML='<table class="table table-hover">'+
+  '<thead class="thead-dark">'+
+    '<tr>'+
+      '<th scope="col">#</th>'+
+      '<th scope="col">Fila</th>'+
+      '<th scope="col">Columna</th>'+
+      '<th scope="col">Token</th>'+
+      '<th scope="col">Lexema</th>'+
+    '</tr>'+
+  '</thead>'+
+  '<tbody>'+contenidoTokens+'</tbody>'+
+'</table>';
+$("#exampleModal").modal();
+        }
+        else {
+          tituloMsg.innerHTML="Sin Tokens";
+          bodyMsg.innerHTML="No se ha obtenido un listado de Tokens. ¿El archivo se encuentra vacío?";
+          $("#exampleModal").modal();
+        }
+    });
+  
+  
+  
+         
+} 
 function Conn() {
 
     var url = 'http://localhost:8080/Analizar/';
+    var urlT = 'http://localhost:8080/Traducir/';
 
     var dataAsJson = {
         input: editor.getValue()
     };
 
     $.post(url, dataAsJson, function (data, status) {
+      console.log("ANALASIS");
         console.log(status);
         if (data.length == 0) {
-            alert("No hay errores");
+          tituloMsg.innerHTML="Análisis finalizado";
+          bodyMsg.innerHTML="No se han encontrado errores, revise la traducción obtenida en la salida.";
+          $("#exampleModal").modal();
+            console.log("TRADUCCION");
+            $.post(urlT,dataAsJson,function(data1,status1){
+              console.log(status1);
+              if(data1.length!=0){
+                salJS.setValue(data1);
+                salJS.getSession().setValue(js_beautify(salJS.getValue(), {
+        indent_size: 2
+    }));
+              }
+            })
         }
         else {
-            alert("Sí hay errores");
-            errorsArray = data;
+          tituloMsg.innerHTML="Análisis finalizado";
+          bodyMsg.innerHTML="Se han encontrado errores, por favor revisar las consolas de salida.";
+          $("#exampleModal").modal();
+            salJS.setValue(data);
         }
     });
+
+    
 }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify.min.js"
+    integrity="sha256-z3YWAUWq4ZqhJwjqxdTFwmXUOkEPpQUpdxWHCZVADA4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.5/beautify-css.min.js"
+    integrity="sha256-j7ahmt6lLS5KOhBLZUivk4/awJlkM8eDP/CYbrCDqRA=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

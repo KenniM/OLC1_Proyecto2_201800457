@@ -15,6 +15,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("js/"))))
+	http.Handle("/js/src/", http.StripPrefix("/js/src/", http.FileServer(http.Dir("js/src/"))))
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css/"))))
 
 	http.HandleFunc("/", indexHandler)

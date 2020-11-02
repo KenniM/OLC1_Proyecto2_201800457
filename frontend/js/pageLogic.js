@@ -1,16 +1,42 @@
 var contadorPestanias=2,
     arregloPestanias=new Array(),
+    arregloSalidasJS=new Array(),
+    arregloSalidasPy=new Array(),
     tabActual=1;
-    var EditSession = ace.require(["src/edit_session"]).EditSession;
 
 function addTab(){
     var nombre="Pestaña "+contadorPestanias;
+    var id="Pestaña"+contadorPestanias;
     var elemento=document.getElementById('pestaniasT').insertAdjacentHTML('beforeend','\
     <li class="nav-item">\
-          <a class="nav-link" data-toggle="tab" href="#home" onclick="changeTab('+contadorPestanias+')">'+nombre+'</a>\
+          <a id="'+id+'"class="nav-link" data-toggle="tab" href="#home" onclick="changeTab('+contadorPestanias+')">'+nombre+'</a>\
         </li>');
     contadorPestanias++;
+    saveTab(tabActual);
+    var pestActual=document.getElementById(id);
+    pestActual.click();
+    editor.setValue("");
+    salJS.setValue("");
+    salPy.setValue("");
 }
+
+function leerArchivo(e) {
+    var archivo = e.target.files[0];
+    if (!archivo) {
+      return;
+    }
+    var lector = new FileReader();
+    lector.onload = function(e) {
+      var contenido = e.target.result;
+      mostrarContenido(contenido);
+    };
+    lector.readAsText(archivo);
+  }
+  function mostrarContenido(contenido) {
+    editor.setValue(contenido);
+  }
+document.getElementById('fileInput')
+  .addEventListener('change', leerArchivo, false);
 
 function changeTab(id){
     saveTab(tabActual);
@@ -21,18 +47,26 @@ function changeTab(id){
 function saveTab(id){
     var index=arregloPestanias[id-1];
     if (index!=undefined){
-        index.session.setValue(editor.getValue());
+        arregloPestanias[id-1]=editor.getValue();
+        arregloSalidasJS[id-1]=salJS.getValue();
+        arregloSalidasPy[id-1]=salPy.getValue();
     }else{
-        var session= new EditSession(editor.getValue());
+        var session= editor.getValue();
+        var session2= salJS.getValue();
+        var session3= salPy.getValue();
         arregloPestanias.push(session);
+        arregloSalidasJS.push(session2);
+        arregloSalidasPy.push(session3);
     }
     
 }
 function loadTab(id){
     var index=arregloPestanias[id-1];
+    var index2=arregloSalidasJS[id-1];
+    var index3=arregloSalidasPy[id-1];
     if(index!=undefined){
-        editor.setSession(index);
-    }else{
-        window.alert('No había una sesión guardada dentro de esta pestaña.');
+        editor.setValue(index);
+        salJS.setValue(index2);
+        salPy.setValue(index3);
     }
 }

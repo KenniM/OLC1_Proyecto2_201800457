@@ -1,39 +1,45 @@
-{
-  "Tipo": "INSTR_DECLARACION_CLASE",
-  "ID_Clase": "Myclase",
-  "Lista_Instrucciones": [
-    {
-      "Tipo": "INSTR_DECLARACION",
-      "Tipo_dato": "String",
-      "ID_Declaracion": [
-        "variable",
-        "variable1",
-        "variable2"
-      ]
-    },
-    {
-      "Tipo": "INSTR_DECLARACION",
-      "Tipo_dato": "int",
-      "ID_Declaracion": [
-        "constante"
-      ],
-      "Expresion": {
-        "Tipo": "OPER_SUMA",
-        "Operador_izquierda": {
-          "Tipo": "OPER_RESTA",
+[
+  {
+    "Tipo": "INSTR_DECLARACION_CLASE",
+    "ID_Clase": "Myclase",
+    "Lista_Instrucciones": [
+      {
+        "Tipo": "INSTR_DECLARACION",
+        "Tipo_dato": "String",
+        "ID_Declaracion": [
+          "variable",
+          "variable1",
+          "variable2"
+        ]
+      },
+      {
+        "Tipo": "INSTR_DECLARACION",
+        "Tipo_dato": "int",
+        "ID_Declaracion": [
+          "constante"
+        ],
+        "Expresion": {
+          "Tipo": "OPER_SUMA",
           "Operador_izquierda": {
-            "Tipo": "OPER_SUMA",
+            "Tipo": "OPER_RESTA",
             "Operador_izquierda": {
               "Tipo": "OPER_SUMA",
               "Operador_izquierda": {
-                "Tipo": "OPER_DIVISION",
+                "Tipo": "OPER_SUMA",
                 "Operador_izquierda": {
-                  "Tipo": "OPER_MULTIPLICACION",
+                  "Tipo": "OPER_DIVISION",
                   "Operador_izquierda": {
-                    "Tipo": "OPER_DIVISION",
+                    "Tipo": "OPER_MULTIPLICACION",
                     "Operador_izquierda": {
-                      "Tipo": "NUMERO",
-                      "Valor": "100"
+                      "Tipo": "OPER_DIVISION",
+                      "Operador_izquierda": {
+                        "Tipo": "NUMERO",
+                        "Valor": "100"
+                      },
+                      "Operador_derecha": {
+                        "Tipo": "NUMERO",
+                        "Valor": "5"
+                      }
                     },
                     "Operador_derecha": {
                       "Tipo": "NUMERO",
@@ -47,71 +53,381 @@
                 },
                 "Operador_derecha": {
                   "Tipo": "NUMERO",
-                  "Valor": "5"
+                  "Valor": "3"
                 }
               },
               "Operador_derecha": {
                 "Tipo": "NUMERO",
-                "Valor": "3"
+                "Valor": "2"
               }
             },
             "Operador_derecha": {
-              "Tipo": "NUMERO",
-              "Valor": "2"
+              "Tipo": "OPER_MULTIPLICACION",
+              "Operador_izquierda": {
+                "Tipo": "NUMERO",
+                "Valor": "1"
+              },
+              "Operador_derecha": {
+                "Tipo": "NUMERO",
+                "Valor": "0"
+              }
             }
           },
           "Operador_derecha": {
-            "Tipo": "OPER_MULTIPLICACION",
-            "Operador_izquierda": {
+            "Tipo": "NUMERO",
+            "Valor": "1"
+          }
+        }
+      },
+      {
+        "Tipo": "INSTR_DECLARACION_FUNCION",
+        "ID_Funcion": "MyMetodo",
+        "Lista_instrucciones": [
+          {
+            "Tipo": "INSTR_DECLARACION",
+            "Tipo_dato": "String",
+            "ID_Declaracion": [
+              "nombre"
+            ],
+            "Expresion": {
+              "Tipo": "STRING",
+              "Valor": "\"myMetodo\""
+            }
+          },
+          {
+            "Tipo": "INSTR_DECLARACION",
+            "Tipo_dato": "int",
+            "ID_Declaracion": [
+              "x",
+              "y"
+            ]
+          },
+          {
+            "Tipo": "INSTR_ASIGNACION",
+            "ID": "x",
+            "Expresion": {
               "Tipo": "NUMERO",
-              "Valor": "1"
+              "Valor": "10"
+            }
+          },
+          {
+            "Tipo": "INSTR_ASIGNACION",
+            "ID": "y",
+            "Expresion": {
+              "Tipo": "NUMERO",
+              "Valor": "11"
+            }
+          },
+          {
+            "Tipo": "INSTR_DECLARACION",
+            "Tipo_dato": "int",
+            "ID_Declaracion": [
+              "variable"
+            ],
+            "Expresion": {
+              "Tipo": "OPER_RESTA",
+              "Operador_izquierda": {
+                "Tipo": "OPER_SUMA",
+                "Operador_izquierda": {
+                  "Tipo": "NUMERO",
+                  "Valor": "3"
+                },
+                "Operador_derecha": {
+                  "Tipo": "NUMERO",
+                  "Valor": "3"
+                }
+              },
+              "Operador_derecha": {
+                "Tipo": "OPER_MULTIPLICACION",
+                "Operador_izquierda": {
+                  "Tipo": "OPER_DIVISION",
+                  "Operador_izquierda": {
+                    "Tipo": "NUMERO",
+                    "Valor": "5"
+                  },
+                  "Operador_derecha": {
+                    "Tipo": "NUMERO",
+                    "Valor": "5"
+                  }
+                },
+                "Operador_derecha": {
+                  "Tipo": "NUMERO",
+                  "Valor": "10"
+                }
+              }
+            }
+          },
+          {
+            "Tipo": "INSTR_PRINTLN",
+            "Expresion": {
+              "Tipo": "STRING",
+              "Valor": "\"myMetodo\""
+            }
+          },
+          {
+            "Tipo": "INSTR_PRINT",
+            "Expresion": {
+              "Tipo": "ID",
+              "Valor": "x"
+            }
+          }
+        ]
+      },
+      {
+        "Tipo": "INSTR_DECLARACION_FUNCION",
+        "ID_Funcion": "MyMetodo2",
+        "Lista_parametros": [
+          {
+            "Tipo_dato": "int",
+            "ID_Parametro": "x"
+          }
+        ],
+        "Lista_instrucciones": [
+          {
+            "Tipo": "INSTR_DECLARACION",
+            "Tipo_dato": "int",
+            "ID_Declaracion": [
+              "valor"
+            ],
+            "Expresion": {
+              "Tipo": "ID",
+              "Valor": "x"
+            }
+          },
+          {
+            "Tipo": "INSTR_PRINTLN",
+            "Expresion": {
+              "Tipo": "ID",
+              "Valor": "x"
+            }
+          },
+          {
+            "Tipo": "INSTR_FOR",
+            "Operacion": {
+              "Tipo": "INSTR_DECLARACION",
+              "Tipo_dato": "int",
+              "ID_Declaracion": [
+                "f"
+              ]
             },
-            "Operador_derecha": {
+            "Expresion": {
+              "Tipo": "OPER_MENOR_IGUAL_QUE",
+              "Operador_izquierda": {
+                "Tipo": "ID",
+                "Valor": "x"
+              },
+              "Operador_derecha": {
+                "Tipo": "ID",
+                "Valor": "f"
+              }
+            },
+            "Operacion_Unaria": {
+              "Tipo": "OPER_INCREMENTO",
+              "Operador_izquierda": "f"
+            },
+            "Lista_Instrucciones": [
+              {
+                "Tipo": "INSTR_PRINTLN",
+                "Expresion": {
+                  "Tipo": "STRING",
+                  "Valor": "\"HOla\""
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Tipo": "INSTR_DECLARACION_FUNCION",
+        "ID_Funcion": "Contador",
+        "Lista_instrucciones": [
+          {
+            "Tipo": "INSTR_DECLARACION",
+            "Tipo_dato": "int",
+            "ID_Declaracion": [
+              "contador"
+            ],
+            "Expresion": {
               "Tipo": "NUMERO",
               "Valor": "0"
             }
+          },
+          {
+            "Tipo": "INSTR_DO",
+            "Lista_Instrucciones": [
+              {
+                "Tipo": "INSTR_PRINTLN",
+                "Expresion": {
+                  "Tipo": "OPER_SUMA",
+                  "Operador_izquierda": {
+                    "Tipo": "STRING",
+                    "Valor": "\"Contador\""
+                  },
+                  "Operador_derecha": {
+                    "Tipo": "OPER_SUMA",
+                    "Operador_izquierda": {
+                      "Tipo": "ID",
+                      "Valor": "contador"
+                    },
+                    "Operador_derecha": {
+                      "Tipo": "NUMERO",
+                      "Valor": "1"
+                    }
+                  }
+                }
+              },
+              {
+                "Tipo": "OPER_INCREMENTO",
+                "Operador_izquierda": "contador"
+              }
+            ],
+            "Condicion": {
+              "Operador_izquierda": {
+                "Tipo": "ID",
+                "Valor": "contador"
+              },
+              "Operador_derecha": {
+                "Tipo": "NUMERO",
+                "Valor": "10"
+              }
+            }
+          },
+          {
+            "Tipo": "INSTR_PRINTLN",
+            "Expresion": {
+              "Tipo": "OPER_SUMA",
+              "Operador_izquierda": {
+                "Tipo": "ID",
+                "Valor": "contador"
+              },
+              "Operador_derecha": {
+                "Tipo": "STRING",
+                "Valor": "\"va aumentando\""
+              }
+            }
           }
-        },
-        "Operador_derecha": {
-          "Tipo": "NUMERO",
-          "Valor": "1"
-        }
+        ]
+      },
+      {
+        "Tipo": "INSTR_DECLARACION_MAIN",
+        "Nombre_Paramatero": "args",
+        "Lista_Instrucciones": [
+          {
+            "Tipo": "INSTR_PRINTLN",
+            "Expresion": {
+              "Tipo": "STRING",
+              "Valor": "\"ESTE ES EL MAIN\""
+            }
+          }
+        ]
+      },
+      {
+        "Tipo": "INSTR_DECLARACION_FUNCION",
+        "ID_Funcion": "testif",
+        "Lista_parametros": [
+          {
+            "Tipo_dato": "String",
+            "ID_Parametro": "valor"
+          }
+        ],
+        "Lista_instrucciones": [
+          {
+            "Tipo": "INSTR_DECLARACION",
+            "Tipo_dato": "int",
+            "ID_Declaracion": [
+              "contador"
+            ],
+            "Expresion": {
+              "Tipo": "ID",
+              "Valor": "valor"
+            }
+          },
+          {
+            "Tipo": "INSTR_IF",
+            "Expresion_Logica": {
+              "Tipo": "OPER_IGUAL",
+              "Operador_izquierda": {
+                "Tipo": "ID",
+                "Valor": "valor"
+              },
+              "Operador_derecha": {
+                "Tipo": "NUMERO",
+                "Valor": "10"
+              }
+            },
+            "Then": [
+              {
+                "Tipo": "INSTR_FOR",
+                "Operacion": {
+                  "Tipo": "INSTR_DECLARACION",
+                  "Tipo_dato": "int",
+                  "ID_Declaracion": [
+                    "f"
+                  ]
+                },
+                "Expresion": {
+                  "Tipo": "OPER_MENOR_IGUAL_QUE",
+                  "Operador_izquierda": {
+                    "Tipo": "ID",
+                    "Valor": "x"
+                  },
+                  "Operador_derecha": {
+                    "Tipo": "ID",
+                    "Valor": "f"
+                  }
+                },
+                "Operacion_Unaria": {
+                  "Tipo": "OPER_INCREMENTO",
+                  "Operador_izquierda": "f"
+                },
+                "Lista_Instrucciones": [
+                  {
+                    "Tipo": "INSTR_PRINTLN",
+                    "Expresion": {
+                      "Tipo": "ID",
+                      "Valor": "f"
+                    }
+                  }
+                ]
+              }
+            ],
+            "Else": [
+              {
+                "Tipo": "INSTR_IF",
+                "Expresion_Logica": {
+                  "Tipo": "OPER_MAYOR_QUE",
+                  "Operador_izquierda": {
+                    "Tipo": "ID",
+                    "Valor": "valor"
+                  },
+                  "Operador_derecha": {
+                    "Tipo": "NUMERO",
+                    "Valor": "10"
+                  }
+                },
+                "Then": [
+                  {
+                    "Tipo": "INSTR_PRINTLN",
+                    "Expresion": {
+                      "Tipo": "STRING",
+                      "Valor": "\"x\""
+                    }
+                  }
+                ],
+                "Else": [
+                  {
+                    "Tipo": "INSTR_PRINTLN",
+                    "Expresion": {
+                      "Tipo": "STRING",
+                      "Valor": "\"x\""
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
-    },
-    {
-      "Tipo": "INSTR_DECLARACION_FUNCION",
-      "ID_Funcion": "void",
-      "Lista_instrucciones": ")"
-    },
-    {
-      "Tipo": "INSTR_DECLARACION_FUNCION",
-      "ID_Funcion": "void",
-      "Lista_parametros": "(",
-      "Lista_instrucciones": ")"
-    },
-    {
-      "Tipo": "INSTR_DECLARACION_FUNCION",
-      "ID_Funcion": "void",
-      "Lista_instrucciones": ")"
-    },
-    {
-      "Tipo": "INSTR_DECLARACION_MAIN",
-      "Nombre_Paramatero": "args",
-      "Lista_Instrucciones": [
-        {
-          "Tipo": "INSTR_PRINTLN",
-          "Expresion": {
-            "Tipo": "STRING",
-            "Valor": "\"ESTE ES EL MAIN\""
-          }
-        }
-      ]
-    },
-    {
-      "Tipo": "INSTR_DECLARACION_FUNCION",
-      "ID_Funcion": "void",
-      "Lista_parametros": "(",
-      "Lista_instrucciones": ")"
-    }
-  ]
-}
+    ]
+  }
+]
