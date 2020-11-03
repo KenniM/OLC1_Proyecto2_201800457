@@ -142,7 +142,9 @@ DEFINICIONES_INTERFAZ:  DEFINICIONES_INTERFAZ DEFINICION_INTERFAZ
 DEFINICION_INTERFAZ:    'RES_PUBLIC' 'RES_VOID' 'ID' '(' ')' ';'                            
                     |   'RES_PUBLIC' 'RES_VOID' 'ID' '(' LISTA_PARAM ')' ';'                
                     |   'RES_PUBLIC' TIPO 'ID' '(' ')' ';'                                  
-                    |   'RES_PUBLIC' TIPO 'ID' '(' LISTA_PARAM ')' ';'                      
+                    |   'RES_PUBLIC' TIPO 'ID' '(' LISTA_PARAM ')' ';'          
+                    |   'COMENTARIO_LINEAL'                                                 {$$=`${$1}\n`;}
+                    |   'COMENTARIO_MULTILINEA'                                             {$$=`${$1}`;}            
                     ;    
 INSTRUCCIONES_CLASE:     INSTRUCCIONES_CLASE INSTRUCCION_CLASE                              {$$=`${$1}${$2}`;}
                     |   INSTRUCCION_CLASE                                                   {$$=`${$1}`;}

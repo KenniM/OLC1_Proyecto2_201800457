@@ -1,0 +1,23 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+
+  "ecmaFeatures": {
+    "modules": true
+  },
+
+  "parserOptions": {
+    "sourceType": "module"
+  },
+
+  "extends": "eslint:recommended",
+
+  "rules": {
+    "no-undef": 2,
+    "no-console": 1
+  }
+}

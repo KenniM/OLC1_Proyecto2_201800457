@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROYECTO2_201800457</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/vtree.css" type="text/css"/>
+
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="/dist/vtree.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
@@ -168,10 +172,15 @@
 <button type="button" class="btn btn-primary" onclick="verTokens()">
   Ver lista de Tokens
 </button>
+<button type="button" class="btn btn-primary" onclick="verAst()" data-toggle="collapse" data-target="#container2" aria-expanded="false" aria-controls="container2">
+  Ver AST
+</button>
 <style>
   @media screen and (min-width: 676px) {
       .modal-dialog {
-        max-width: 1000px; /* New width for default modal */
+        overflow-y: initial !important;
+        overflow-x: initial !important;
+        max-width: 1300px; /* New width for default modal */
       }
   }
 </style>
@@ -195,6 +204,9 @@
   </div>
 </div>
   </div>
+  <center>
+  <div class="collapse" id="container2"></div>
+</center>
     <script src="./js/jquery.min.js"></script>
     <script src="/js/pageLogic.js" type="text/javascript" charset="utf-8"></script>
       <script src="/js/src/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -229,6 +241,46 @@
         salPy.setReadOnly(true);
 
         let errorsArray = [];
+
+
+        var vt;
+  function updateTree(contenido) {
+
+var container = document.getElementById("container2");
+vt = new VTree(container);
+var reader = new VTree.reader.Object();
+
+    try {
+      var jsonData = JSON.parse(contenido);
+    } catch (e) {
+      bodyMsg.innerHTML = 'JSON parse error: ' + e.message;
+    }
+
+    var data = reader.read(jsonData);
+
+    vt.data(data)
+      .update();
+  }
+
+  
+
+
+        function verAst(){
+          var getAst='http://localhost:8080/GetAST/';
+          var dataAsJson={
+            input:editor.getValue()
+          };
+          $.post(getAst,dataAsJson,function(data,status){
+            if (data.length!=0){
+              /*tituloMsg.innerHTML='Visor del AST';
+              bodyMsg.innerHTML='';*/
+              document.getElementById("container2").innerHTML="";
+              let stringJson=JSON.stringify(data,null,2);
+              updateTree(stringJson);
+            }
+          })
+        }
+
         function verTokens(){
           
     var getTokens = 'http://localhost:8080/GetTokens/';
@@ -239,6 +291,7 @@
         if (data.length != 0) {
           tituloMsg.innerHTML="Lista de Tokens";
           let contenidoTokens=data;
+          bodyMsg.innerHTML='';
           bodyMsg.innerHTML='<table class="table table-hover">'+
   '<thead class="thead-dark">'+
     '<tr>'+

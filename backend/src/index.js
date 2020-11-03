@@ -73,6 +73,25 @@ app.post('/GetTokens/',(req,res)=>{
         console.error(e);
     }
 });
+
+app.post('/GetAST/',(req,res)=>{
+    try{
+        const {input}=req.body;
+        var fs=require('fs');
+        var parser=require('./grammar');
+        var ast;
+        try{
+            ast=parser.parse(input.toString());
+        }catch (e){
+            console.log("Se ha producido un error al generar el AST");
+            console.error(e);
+        }
+        res.send(ast);
+    }catch (e) {
+        console.error(e);
+    }
+})
+
 app.post('/Analizar/', (req, res) => {
     try {
         console.log("------- ANALISIS ------");
