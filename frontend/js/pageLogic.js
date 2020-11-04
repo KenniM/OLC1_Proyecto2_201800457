@@ -60,6 +60,42 @@ function saveTab(id){
     }
     
 }
+
+function saveEntryFile()
+{  
+    var textToWrite = editor.getValue();
+    var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+    var downloadLink = document.createElement("a");
+    downloadLink.download = "entrada.java";
+    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    downloadLink.click();
+}
+
+function saveJSOutput()
+{  
+    var textToWrite = salJS.getValue();
+    var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+    var downloadLink = document.createElement("a");
+    downloadLink.download = "JSOutput.js";
+    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    downloadLink.click();
+}
+
+function savePyOutput()
+{  
+    var textToWrite = salPy.getValue();
+    var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+    var downloadLink = document.createElement("a");
+    downloadLink.download = "PyOutput.py";
+    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    downloadLink.click();
+}
+
+function saveBoth(){
+  saveJSOutput();
+  savePyOutput();
+}
+
 function loadTab(id){
     var index=arregloPestanias[id-1];
     var index2=arregloSalidasJS[id-1];
