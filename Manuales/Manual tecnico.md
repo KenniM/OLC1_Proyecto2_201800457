@@ -208,7 +208,7 @@ exports.vaciar = function () { listaTokens=[];contador=1; };
 %}
 ```
 La definición léxica se elaboró de la siguiente manera:
-```javascript
+```jison
 /* DEFINICIÓN LÉXICA */
 
 %lex
