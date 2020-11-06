@@ -575,7 +575,7 @@ module.exports.INSTRUCCIONES_API=INSTRUCCIONES_API;
 ```
 Ahora ya que tenemos la definición de instrucciones para el AST, podemos proceder con la definición sintáctica:
 
-```javascript
+```jison
 // IMPORTACION DE LAS INSTRUCCIONES
 %{
 const TIPO_OPERACION=require('./instructions').TIPO_OPERACION;
