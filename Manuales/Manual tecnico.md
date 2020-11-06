@@ -194,7 +194,7 @@ Creamos un archivo `grammar.jison` (el nombre puede variar), dentro de él decla
 
 Inicialmente crearemos unos objetos que nos ayudarán a guardar la información obtenida dentro del análisis.
 
-```javascript
+```jison
 %{
 let modoPanico = false,
     contador = 1,
