@@ -16,6 +16,7 @@ Por defecto, iniciará con una entrada de muestra, dentro del menú Archivo se c
 + Guardar salida de JavaScript: genera un archivo .js con la traducción obtenida.
 + Guardar salida de Python: genera un archivo .py con la traducción obtenida
 + Guardar ambas salidas: genera las dos salidas anteriores con un solo clic.
+
 ![alt text](menu.png "Menú archivo")
 
 Al pulsar el botón analizar se realizará el análisis léxico y sintáctico de la sesión actual.
