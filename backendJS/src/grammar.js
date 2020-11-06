@@ -105,7 +105,9 @@ case 7:
 this.$=API.nuevaInterfaz($$[$0-2],[]);
 break;
 case 8:
-var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba una declaración de clase o interfaz, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");contador++;
+var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba una declaración de clase o interfaz, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
+                    listaErrores.push('<tr><th scope="row">'+contador.toString()+'</th><td> Sintáctico </td><td>'+this._$.first_line+'</td><td>'+(parseInt(this._$.first_column )+1)+'</td><td>Se esperaba una declaración de clase o interfaz, pero se obtuvo \"'+yytext+'\"</td></tr>\n');
+                    contador++;
 break;
 case 11: case 15:
 this.$=API.nuevaDefVoid($$[$0-3]);
@@ -120,7 +122,8 @@ case 14: case 18:
 this.$=API.nuevaDefMetodoParametrizado($$[$0-5],$$[$0-4],$$[$0-2]);
 break;
 case 19:
-var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba la declaración de un método, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");contador++;
+var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba la declaración de un método, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
+                    listaErrores.push('<tr><th scope="row">'+contador.toString()+'</th><td> Sintáctico </td><td>'+this._$.first_line+'</td><td>'+(parseInt(this._$.first_column )+1)+'</td><td>Se esperaba la declaración de un método, pero se obtuvo \"'+yytext+'\"</td></tr>\n');                    contador++;
 break;
 case 22: case 26:
 this.$=API.nuevoVoid($$[$0-3],$$[$0]);
@@ -141,7 +144,9 @@ case 32: case 33: case 44: case 45: case 49: case 50: case 51: case 52: case 53:
 this.$=$$[$0];
 break;
 case 34:
-var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba:declaración de método o función, declaración, asignación o llamada a una función, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");contador++;
+var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba:declaración de método o función, declaración, asignación o llamada a una función, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
+                    listaErrores.push('<tr><th scope="row">'+contador.toString()+'</th><td> Sintáctico </td><td>'+this._$.first_line+'</td><td>'+(parseInt(this._$.first_column )+1)+'</td><td>Se esperaba:declaración de método o función, declaración, asignación o llamada a una función, pero se obtuvo \"'+yytext+'\"</td></tr>\n');
+                    contador++;
 break;
 case 35: case 42: case 47: case 87:
 $$[$0-2].push($$[$0]);this.$=$$[$0-2];
@@ -182,6 +187,7 @@ case 60:
 			let row = this._$.first_line;
 			let column = this._$.first_column + 1;
 			var newError = contador.toString() + ". Se esperaba el inicio de una instrucción valida pero se obtuvo \"" + $$[$0] + "\" en la línea "+row+", columna "+column+".\n";
+            listaErrores.push('<tr><th scope="row">'+contador.toString()+'</th><td> Sintáctico </td><td>'+this._$.first_line+'</td><td>'+(parseInt(this._$.first_column)+1)+'</td><td>Se esperaba el inicio de una instrucción válida pero se obtuvo \"' + $$[$0] + '\"</td></tr>\n');
 			contador+=1;
 			errores.push(newError);
 			modoPanico = true;
@@ -574,9 +580,11 @@ let modoPanico = false,
     contadorTokens=1,
     errores = new Array();
     listaTokens = new Array();
+    listaErrores=new Array();
 module.exports.errores = errores;
 module.exports.listaTokens = listaTokens;
-exports.vaciar = function () { listaTokens=[];contador=1; };
+module.exports.listaErrores=listaErrores;
+exports.vaciar = function () { listaTokens=[];listaErrores=[];contador=1; };
 
 const TIPO_OPERACION=require('./instructions').TIPO_OPERACION;
 const TIPO_VALOR=require('./instructions').TIPO_VALOR;
@@ -1033,6 +1041,7 @@ case 60:
     let fila=yy_.yylloc.first_line;
     let columna=yy_.yylloc.first_column+1;
     let nuevoError= contador.toString() + ". ERROR LÉXICO: El caracter \"" + yy_.yytext + "\" no pertenece al lenguaje, en la línea "+fila+", columna "+columna+".\n";
+    listaErrores.push('<tr><th scope="row">'+contador.toString()+'</th><td> Léxico </td><td>'+yy_.yylloc.first_line+'</td><td>'+(parseInt(yy_.yylloc.first_column)+1)+'</td><td>El caracter \"' + yy_.yytext + '\" no pertenece al lenguaje.</td></tr>\n');
 	contador+=1;
 	errores.push(nuevoError);
 

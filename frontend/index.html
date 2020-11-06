@@ -304,6 +304,7 @@ function Conn() {
 
     var url = 'http://localhost:8080/Analizar/';
     var urlT = 'http://localhost:8080/Traducir/';
+    var urlE = 'http://localhost:8080/GetErrores/';
 
     var dataAsJson = {
         input: editor.getValue()
@@ -328,9 +329,25 @@ function Conn() {
             })
         }
         else {
-          tituloMsg.innerHTML="Análisis finalizado";
-          bodyMsg.innerHTML="Se han encontrado errores, por favor revisar las consolas de salida.";
-          $("#exampleModal").modal();
+          tituloMsg.innerHTML="Análisis finalizado con errores";
+          $.post(urlE,dataAsJson,function(data5,status1){
+              console.log(status1);
+              let contenidoErrores=data5;
+          bodyMsg.innerHTML='';
+          bodyMsg.innerHTML='<table class="table table-hover">'+
+  '<thead class="thead-dark">'+
+    '<tr>'+
+      '<th scope="col">#</th>'+
+      '<th scope="col">Tipo de Errror</th>'+
+      '<th scope="col">Fila</th>'+
+      '<th scope="col">Columna</th>'+
+      '<th scope="col">Descripción</th>'+
+    '</tr>'+
+  '</thead>'+
+  '<tbody>'+contenidoErrores+'</tbody>'+
+'</table>';
+$("#exampleModal").modal();
+            })
             salJS.setValue(data);
         }
     });

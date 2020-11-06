@@ -90,7 +90,25 @@ app.post('/GetAST/',(req,res)=>{
     }catch (e) {
         console.error(e);
     }
-})
+});
+
+app.post('/GetErrores/', (req,res)=>{
+    try{
+        const {input} =req.body;
+        var parser=require('./grammar');
+        var ast;
+        try {
+            ast=parser.parse(input.toString());
+            let errores=require('./grammar').listaErrores;
+            require('./grammar').vaciar();
+            res.send(errores.join(""));
+        } catch (e) {
+            
+        }
+    }catch(e){
+
+    }
+});
 
 app.post('/Analizar/', (req, res) => {
     try {
