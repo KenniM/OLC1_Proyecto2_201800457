@@ -7,34 +7,54 @@
         "Tipo": "INSTR_DECLARACION",
         "Tipo_dato": "String",
         "ID_Declaracion": [
-          "variable",
-          "variable1",
-          "variable2"
+          {
+            "Tipo": "ID",
+            "Valor": "variable"
+          },
+          {
+            "Tipo": "ID",
+            "Valor": "variable1"
+          },
+          {
+            "Tipo": "ID",
+            "Valor": "variable2"
+          }
         ]
       },
       {
         "Tipo": "INSTR_DECLARACION",
         "Tipo_dato": "int",
         "ID_Declaracion": [
-          "constante"
-        ],
-        "Expresion": {
-          "Tipo": "OPER_SUMA",
-          "Operador_izquierda": {
-            "Tipo": "OPER_RESTA",
-            "Operador_izquierda": {
+          {
+            "Tipo": "INSTR_ASIGNACION",
+            "ID": "constante",
+            "Expresion": {
               "Tipo": "OPER_SUMA",
               "Operador_izquierda": {
-                "Tipo": "OPER_SUMA",
+                "Tipo": "OPER_RESTA",
                 "Operador_izquierda": {
-                  "Tipo": "OPER_DIVISION",
+                  "Tipo": "OPER_SUMA",
                   "Operador_izquierda": {
-                    "Tipo": "OPER_MULTIPLICACION",
+                    "Tipo": "OPER_SUMA",
                     "Operador_izquierda": {
                       "Tipo": "OPER_DIVISION",
                       "Operador_izquierda": {
-                        "Tipo": "NUMERO",
-                        "Valor": "100"
+                        "Tipo": "OPER_MULTIPLICACION",
+                        "Operador_izquierda": {
+                          "Tipo": "OPER_DIVISION",
+                          "Operador_izquierda": {
+                            "Tipo": "NUMERO",
+                            "Valor": "100"
+                          },
+                          "Operador_derecha": {
+                            "Tipo": "NUMERO",
+                            "Valor": "5"
+                          }
+                        },
+                        "Operador_derecha": {
+                          "Tipo": "NUMERO",
+                          "Valor": "5"
+                        }
                       },
                       "Operador_derecha": {
                         "Tipo": "NUMERO",
@@ -43,41 +63,33 @@
                     },
                     "Operador_derecha": {
                       "Tipo": "NUMERO",
-                      "Valor": "5"
+                      "Valor": "3"
                     }
                   },
                   "Operador_derecha": {
                     "Tipo": "NUMERO",
-                    "Valor": "5"
+                    "Valor": "2"
                   }
                 },
                 "Operador_derecha": {
-                  "Tipo": "NUMERO",
-                  "Valor": "3"
+                  "Tipo": "OPER_MULTIPLICACION",
+                  "Operador_izquierda": {
+                    "Tipo": "NUMERO",
+                    "Valor": "1"
+                  },
+                  "Operador_derecha": {
+                    "Tipo": "NUMERO",
+                    "Valor": "0"
+                  }
                 }
               },
               "Operador_derecha": {
                 "Tipo": "NUMERO",
-                "Valor": "2"
-              }
-            },
-            "Operador_derecha": {
-              "Tipo": "OPER_MULTIPLICACION",
-              "Operador_izquierda": {
-                "Tipo": "NUMERO",
                 "Valor": "1"
-              },
-              "Operador_derecha": {
-                "Tipo": "NUMERO",
-                "Valor": "0"
               }
             }
-          },
-          "Operador_derecha": {
-            "Tipo": "NUMERO",
-            "Valor": "1"
           }
-        }
+        ]
       },
       {
         "Tipo": "INSTR_DECLARACION_FUNCION",
@@ -87,19 +99,28 @@
             "Tipo": "INSTR_DECLARACION",
             "Tipo_dato": "String",
             "ID_Declaracion": [
-              "nombre"
-            ],
-            "Expresion": {
-              "Tipo": "STRING",
-              "Valor": "\"myMetodo\""
-            }
+              {
+                "Tipo": "INSTR_ASIGNACION",
+                "ID": "nombre",
+                "Expresion": {
+                  "Tipo": "STRING",
+                  "Valor": "\"myMetodo\""
+                }
+              }
+            ]
           },
           {
             "Tipo": "INSTR_DECLARACION",
             "Tipo_dato": "int",
             "ID_Declaracion": [
-              "x",
-              "y"
+              {
+                "Tipo": "ID",
+                "Valor": "x"
+              },
+              {
+                "Tipo": "ID",
+                "Valor": "y"
+              }
             ]
           },
           {
@@ -122,40 +143,43 @@
             "Tipo": "INSTR_DECLARACION",
             "Tipo_dato": "int",
             "ID_Declaracion": [
-              "variable"
-            ],
-            "Expresion": {
-              "Tipo": "OPER_RESTA",
-              "Operador_izquierda": {
-                "Tipo": "OPER_SUMA",
-                "Operador_izquierda": {
-                  "Tipo": "NUMERO",
-                  "Valor": "3"
-                },
-                "Operador_derecha": {
-                  "Tipo": "NUMERO",
-                  "Valor": "3"
-                }
-              },
-              "Operador_derecha": {
-                "Tipo": "OPER_MULTIPLICACION",
-                "Operador_izquierda": {
-                  "Tipo": "OPER_DIVISION",
+              {
+                "Tipo": "INSTR_ASIGNACION",
+                "ID": "variable",
+                "Expresion": {
+                  "Tipo": "OPER_RESTA",
                   "Operador_izquierda": {
-                    "Tipo": "NUMERO",
-                    "Valor": "5"
+                    "Tipo": "OPER_SUMA",
+                    "Operador_izquierda": {
+                      "Tipo": "NUMERO",
+                      "Valor": "3"
+                    },
+                    "Operador_derecha": {
+                      "Tipo": "NUMERO",
+                      "Valor": "3"
+                    }
                   },
                   "Operador_derecha": {
-                    "Tipo": "NUMERO",
-                    "Valor": "5"
+                    "Tipo": "OPER_MULTIPLICACION",
+                    "Operador_izquierda": {
+                      "Tipo": "OPER_DIVISION",
+                      "Operador_izquierda": {
+                        "Tipo": "NUMERO",
+                        "Valor": "5"
+                      },
+                      "Operador_derecha": {
+                        "Tipo": "NUMERO",
+                        "Valor": "5"
+                      }
+                    },
+                    "Operador_derecha": {
+                      "Tipo": "NUMERO",
+                      "Valor": "10"
+                    }
                   }
-                },
-                "Operador_derecha": {
-                  "Tipo": "NUMERO",
-                  "Valor": "10"
                 }
               }
-            }
+            ]
           },
           {
             "Tipo": "INSTR_PRINTLN",
@@ -187,12 +211,15 @@
             "Tipo": "INSTR_DECLARACION",
             "Tipo_dato": "int",
             "ID_Declaracion": [
-              "valor"
-            ],
-            "Expresion": {
-              "Tipo": "ID",
-              "Valor": "x"
-            }
+              {
+                "Tipo": "INSTR_ASIGNACION",
+                "ID": "valor",
+                "Expresion": {
+                  "Tipo": "ID",
+                  "Valor": "x"
+                }
+              }
+            ]
           },
           {
             "Tipo": "INSTR_PRINTLN",
@@ -207,7 +234,10 @@
               "Tipo": "INSTR_DECLARACION",
               "Tipo_dato": "int",
               "ID_Declaracion": [
-                "f"
+                {
+                  "Tipo": "ID",
+                  "Valor": "f"
+                }
               ]
             },
             "Expresion": {
@@ -245,12 +275,15 @@
             "Tipo": "INSTR_DECLARACION",
             "Tipo_dato": "int",
             "ID_Declaracion": [
-              "contador"
-            ],
-            "Expresion": {
-              "Tipo": "NUMERO",
-              "Valor": "0"
-            }
+              {
+                "Tipo": "INSTR_ASIGNACION",
+                "ID": "contador",
+                "Expresion": {
+                  "Tipo": "NUMERO",
+                  "Valor": "0"
+                }
+              }
+            ]
           },
           {
             "Tipo": "INSTR_DO",
@@ -335,12 +368,15 @@
             "Tipo": "INSTR_DECLARACION",
             "Tipo_dato": "int",
             "ID_Declaracion": [
-              "contador"
-            ],
-            "Expresion": {
-              "Tipo": "ID",
-              "Valor": "valor"
-            }
+              {
+                "Tipo": "INSTR_ASIGNACION",
+                "ID": "contador",
+                "Expresion": {
+                  "Tipo": "ID",
+                  "Valor": "valor"
+                }
+              }
+            ]
           },
           {
             "Tipo": "INSTR_IF",
@@ -362,7 +398,10 @@
                   "Tipo": "INSTR_DECLARACION",
                   "Tipo_dato": "int",
                   "ID_Declaracion": [
-                    "f"
+                    {
+                      "Tipo": "ID",
+                      "Valor": "f"
+                    }
                   ]
                 },
                 "Expresion": {

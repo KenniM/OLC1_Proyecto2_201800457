@@ -130,7 +130,7 @@ DEFINICION_CLASE:       'RES_PUBLIC' 'RES_CLASS' 'ID' '{' INSTRUCCIONES_CLASE '}
                     |   'RES_PUBLIC' 'RES_CLASS' 'ID' '{'  '}'                              {$$=API.nuevaClase($3,[]);}
                     |   'RES_PUBLIC' 'RES_INTERFACE' 'ID' '{' DEFINICIONES_INTERFAZ '}'     {$$=API.nuevaInterfaz($3,$5);}
                     |   'RES_PUBLIC' 'RES_INTERFACE' 'ID' '{' '}'                           {$$=API.nuevaInterfaz($3,[]);}
-                    |   error {var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba una declaración de clase o interfaz, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");contador++;}
+                    |   error {let nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");}
                     ;
 DEFINICIONES_INTERFAZ:  DEFINICIONES_INTERFAZ DEFINICION_INTERFAZ                           {$1.push($2);$$=$1;}
                     |   DEFINICION_INTERFAZ                                                 {$$=[$1];}
@@ -143,7 +143,7 @@ DEFINICION_INTERFAZ:    'RES_PUBLIC' 'RES_VOID' 'ID' '(' ')' ';'                
                     |   'RES_VOID' 'ID' '(' LISTA_PARAM ')' ';'                {$$=API.nuevaDefVoidParametrizado($2,$4);}
                     |   TIPO 'ID' '(' ')' ';'                                  {$$=API.nuevaDefMetodo($1,$2);}
                     |   TIPO 'ID' '(' LISTA_PARAM ')' ';'                      {$$=API.nuevaDefMetodoParametrizado($1,$2,$4);}
-                    |   error {var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba la declaración de un método, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");contador++;}
+                    |   error {let nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");}
                     ;    
 INSTRUCCIONES_CLASE:     INSTRUCCIONES_CLASE INSTRUCCION_CLASE                              {$1.push($2);$$=$1;}
                     |   INSTRUCCION_CLASE                                                   {$$=[$1];}
@@ -160,7 +160,7 @@ INSTRUCCION_CLASE:      'RES_PUBLIC' 'RES_VOID' 'ID' '(' ')' BLOQUE_INSTRUCCIONE
                     |   LLAMADA_FUNCION ';'
                     |   DECLARACION                                                         {$$=$1;}
                     |   ASIGNACION                                                          {$$=$1;}
-                    |   error {var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba:declaración de método o función, declaración, asignación o llamada a una función, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");contador++;}
+                    |   error {let nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");}
                     ;
                     
 LISTA_PARAM:            LISTA_PARAM ',' PARAMETRO                                           {$1.push($3);$$=$1;}
@@ -171,21 +171,10 @@ PARAMETRO:              TIPO 'ID'                                               
 ASIGNACION:             'ID' '=' EXPRESION ';'                                              {$$=API.nuevaAsignacion($1,$3);}
                                                                                             //{$$=`${$1} = ${$3}`}
                     ;
-DECLARACION:            DECLARACIONES ';'                                                   {$$=$1;/*$$=API.nuevaDeclaracion($1,$2);*/}
-                    //|   TIPO LISTA_ID '=' EXPRESION ';'                                     {$$=API.nuevaDeclaracionExp($1,$2,$4);}
+DECLARACION:            TIPO LISTA_ID ';'                                                   {$$=API.nuevaDeclaracion($1,$2);}
+                    |   TIPO LISTA_ID '=' EXPRESION ';'                                     {$$=API.nuevaDeclaracionExp($1,$2,$4);}
+
                     ;
-DECLARACIONES:          TIPO DECLARADORES                                                         {$$=API.nuevaDeclaracion($1,$2);}
-                    ;
-DECLARADORES:           DECLARADOR                                                                {$$=[$1];}
-                    |   DECLARADORES ',' DECLARADOR                                         {$1.push($3);$$=$1;}
-                    ;
-DECLARADOR:             ID_VAR                                                                {$$=API.nuevoValor($1,TIPO_VALOR.IDENTIFICADOR);}    
-                    |   INCIALIZADOR                                                          {$$=$1;}
-                    ;
-ID_VAR:                 'ID'                                                                 {$$=$1;}
-                    ;
-INCIALIZADOR:           ID_VAR '=' EXPRESION                                                {$$=API.nuevaAsignacion($1,$3);}
-                    ;        
 LISTA_ID:               LISTA_ID ',' 'ID'                                                   {$1.push($3);$$=$1;}
                     |   'ID'                                                                {$$=[$1];}
                     ;
@@ -208,7 +197,7 @@ ERROR_INSTRUCCIONES:error
     if($1!=';' && !modoPanico){
 			let row = this._$.first_line;
 			let column = this._$.first_column + 1;
-			var newError = contador.toString() + ". Se esperaba el inicio de una instrucción valida pero se obtuvo \"" + $1 + "\" en la línea "+row+", columna "+column+".\n";
+			let newError = contador.toString() + ". Se esperaba el inicio de una instrucción valida pero se obtuvo \"" + $1 + "\" en la línea "+row+", columna "+column+".\n";
 			contador+=1;
 			errores.push(newError);
 			modoPanico = true;

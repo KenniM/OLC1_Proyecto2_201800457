@@ -131,8 +131,8 @@ SET_INSTRUCCIONES:      SET_INSTRUCCIONES DEFINICION_CLASE{$$=`${$1}${$2}`;}
                     ;
 DEFINICION_CLASE:       'RES_PUBLIC' 'RES_CLASS' 'ID' '{' INSTRUCCIONES_CLASE '}'           {$$=`class ${$3}{\n\t${$5}\n}\n`;}
                     |   'RES_PUBLIC' 'RES_CLASS' 'ID' '{'  '}'                              {$$=`class ${$3}{ }`;}
-                    |   'RES_PUBLIC' 'RES_INTERFACE' 'ID' '{' DEFINICIONES_INTERFAZ '}'     {$$=`/* La interfaz '${$3}' fue omitida junto con sus instrucciones */\n`;}
-                    |   'RES_PUBLIC' 'RES_INTERFACE' 'ID' '{' '}'                           {$$=`/* La interfaz '${$3}' fue omitida */\n`;}
+                    |   'RES_PUBLIC' 'RES_INTERFACE' 'ID' '{' DEFINICIONES_INTERFAZ '}'     {$$=`/* La interfaz ${$3} fue omitida junto con sus instrucciones */\n`;}
+                    |   'RES_PUBLIC' 'RES_INTERFACE' 'ID' '{' '}'                           {$$=`/* La interfaz ${$3} fue omitida */\n`;}
                     |   'COMENTARIO_LINEAL'                                                 {$$=`${$1}\n`;}
                     |   'COMENTARIO_MULTILINEA'                                             {$$=`${$1}`;}
                     ;
@@ -177,25 +177,10 @@ PARAMETRO:              TIPO 'ID'                                               
 ASIGNACION:             'ID' '=' EXPRESION ';'                                              {$$=`${$1} = ${$3};`;}
                                                                                             //{$$=`${$1} = ${$3}`}
                     ;
-/*DECLARACION:            TIPO LISTA_ID ';'                                                   {$$=`${$1} ${$2};`;}
-                    |   TIPO LISTA_ID '=' EXPRESION ';'                                     {$$=`${$1} ${$2} = ${$4};`}*/
-DECLARACION:            DECLARACIONES ';'                                                   {$$=`${$1};`;/*$$=API.nuevaDeclaracion($1,$2);*/}
-                    //|   TIPO LISTA_ID '=' EXPRESION ';'                                     {$$=API.nuevaDeclaracionExp($1,$2,$4);}
-                    ;
-DECLARACIONES:          TIPO DECLARADORES                                                         {$$=`var ${$2}`;}
-                    ;
-DECLARADORES:           DECLARADOR                                                                {$$=`${$1}`;}
-                    |   DECLARADORES ',' DECLARADOR                                         {$$=`${$1}, ${$3}`;}
-                    ;
-DECLARADOR:             ID_VAR                                                                {$$=`${$1}`;}    
-                    |   INCIALIZADOR                                                          {$$=`${$1}`;}
-                    ;
-ID_VAR:                 'ID'                                                                 {$$=`${$1}`;}
-                    ;
-INCIALIZADOR:           ID_VAR '=' EXPRESION                                                {$$=`${$1} = ${$3}`;}
-                    ;        
+DECLARACION:            TIPO LISTA_ID ';'                                                   {$$=`${$1} ${$2};`;}
+                    |   TIPO LISTA_ID '=' EXPRESION ';'                                     {$$=`${$1} ${$2} = ${$4};`}
 
-                    
+                    ;
 LISTA_ID:               LISTA_ID ',' 'ID'                                                   {$$=`${$1},${$3}`;}
                     |   'ID'                                                                {$$=`${$1}`;}
                     ;
