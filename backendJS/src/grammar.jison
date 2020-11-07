@@ -133,7 +133,10 @@ DEFINICION_CLASE:       'RES_PUBLIC' 'RES_CLASS' 'ID' '{' INSTRUCCIONES_CLASE '}
                     |   'RES_PUBLIC' 'RES_CLASS' 'ID' '{'  '}'                              {$$=API.nuevaClase($3,[]);}
                     |   'RES_PUBLIC' 'RES_INTERFACE' 'ID' '{' DEFINICIONES_INTERFAZ '}'     {$$=API.nuevaInterfaz($3,$5);}
                     |   'RES_PUBLIC' 'RES_INTERFACE' 'ID' '{' '}'                           {$$=API.nuevaInterfaz($3,[]);}
-                    |   error {var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba una declaración de clase o interfaz, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
+                    |   error ';'{var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba una declaración de clase o interfaz, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
+                    listaErrores.push('<tr><th scope="row">'+contador.toString()+'</th><td> Sintáctico </td><td>'+this._$.first_line+'</td><td>'+(parseInt(this._$.first_column )+1)+'</td><td>Se esperaba una declaración de clase o interfaz, pero se obtuvo \"'+yytext+'\"</td></tr>\n');
+                    contador++;}
+                    |   error '}'{var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba una declaración de clase o interfaz, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
                     listaErrores.push('<tr><th scope="row">'+contador.toString()+'</th><td> Sintáctico </td><td>'+this._$.first_line+'</td><td>'+(parseInt(this._$.first_column )+1)+'</td><td>Se esperaba una declaración de clase o interfaz, pero se obtuvo \"'+yytext+'\"</td></tr>\n');
                     contador++;}
                     ;
@@ -148,8 +151,11 @@ DEFINICION_INTERFAZ:    'RES_PUBLIC' 'RES_VOID' 'ID' '(' ')' ';'                
                     |   'RES_VOID' 'ID' '(' LISTA_PARAM ')' ';'                {$$=API.nuevaDefVoidParametrizado($2,$4);}
                     |   TIPO 'ID' '(' ')' ';'                                  {$$=API.nuevaDefMetodo($1,$2);}
                     |   TIPO 'ID' '(' LISTA_PARAM ')' ';'                      {$$=API.nuevaDefMetodoParametrizado($1,$2,$4);}
-                    |   error {var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba la declaración de un método, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
+                    |   error ';'{var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba la declaración de un método, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
                     listaErrores.push('<tr><th scope="row">'+contador.toString()+'</th><td> Sintáctico </td><td>'+this._$.first_line+'</td><td>'+(parseInt(this._$.first_column )+1)+'</td><td>Se esperaba la declaración de un método, pero se obtuvo \"'+yytext+'\"</td></tr>\n');                    contador++;}
+                    |   error '}'{var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba una declaración de clase o interfaz, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
+                    listaErrores.push('<tr><th scope="row">'+contador.toString()+'</th><td> Sintáctico </td><td>'+this._$.first_line+'</td><td>'+(parseInt(this._$.first_column )+1)+'</td><td>Se esperaba una declaración de clase o interfaz, pero se obtuvo \"'+yytext+'\"</td></tr>\n');
+                    contador++;}
                     ;    
 INSTRUCCIONES_CLASE:     INSTRUCCIONES_CLASE INSTRUCCION_CLASE                              {$1.push($2);$$=$1;}
                     |   INSTRUCCION_CLASE                                                   {$$=[$1];}
@@ -166,8 +172,11 @@ INSTRUCCION_CLASE:      'RES_PUBLIC' 'RES_VOID' 'ID' '(' ')' BLOQUE_INSTRUCCIONE
                     |   LLAMADA_FUNCION ';'
                     |   DECLARACION                                                         {$$=$1;}
                     |   ASIGNACION                                                          {$$=$1;}
-                    |   error {var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba:declaración de método o función, declaración, asignación o llamada a una función, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
+                    |   error ';'{var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba:declaración de método o función, declaración, asignación o llamada a una función, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
                     listaErrores.push('<tr><th scope="row">'+contador.toString()+'</th><td> Sintáctico </td><td>'+this._$.first_line+'</td><td>'+(parseInt(this._$.first_column )+1)+'</td><td>Se esperaba:declaración de método o función, declaración, asignación o llamada a una función, pero se obtuvo \"'+yytext+'\"</td></tr>\n');
+                    contador++;}
+                    |   error '}'{var nuevoError=contador.toString()+'. ERROR SINTÁCTICO: Se ha obtenido un error de sintaxis: ' + yytext + ', se esperaba una declaración de clase o interfaz, en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column;errores.push(nuevoError+"\n");
+                    listaErrores.push('<tr><th scope="row">'+contador.toString()+'</th><td> Sintáctico </td><td>'+this._$.first_line+'</td><td>'+(parseInt(this._$.first_column )+1)+'</td><td>Se esperaba una declaración de clase o interfaz, pero se obtuvo \"'+yytext+'\"</td></tr>\n');
                     contador++;}
                     ;
                     

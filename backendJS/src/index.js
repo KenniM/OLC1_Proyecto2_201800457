@@ -97,14 +97,16 @@ app.post('/GetErrores/', (req,res)=>{
         const {input} =req.body;
         var parser=require('./grammar');
         var ast;
+        var errores;
         try {
             ast=parser.parse(input.toString());
-            let errores=require('./grammar').listaErrores;
+            errores=require('./grammar').listaErrores;
             require('./grammar').vaciar();
-            res.send(errores.join(""));
+            
         } catch (e) {
             
         }
+        res.send(errores.join(""));
     }catch(e){
 
     }
