@@ -54,6 +54,7 @@ identificador ([a-zA-ZñÑ_])[a-zA-Z0-9ñÑ_]*  // ER PARA RECONOCER IDENTIFICAD
 "return"                {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_RETURN</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return 'RES_RETURN';}
 "&&"                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_AND</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '&&';}
 "||"                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_OR</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '||';}
+"!="                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>!=</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '!=';}
 "!"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_NOT</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '!';}
 "^"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>RES_XOR</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '^'}
 ">="                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>>=</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '>=';}
@@ -61,7 +62,6 @@ identificador ([a-zA-ZñÑ_])[a-zA-Z0-9ñÑ_]*  // ER PARA RECONOCER IDENTIFICAD
 ">"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>></td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '>';}
 "<"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td><</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '<';}
 "=="                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>==</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '==';}
-"!="                    {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>!=</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '!=';}
 "."                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>.</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return '.';}
 ";"                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>;</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return ';';}
 ","                     {listaTokens.push('<tr><th scope="row">'+contadorTokens.toString()+'</th><td>'+yylloc.first_line+'</td><td>'+(parseInt(yylloc.first_column)+1)+'</td><td>,</td><td>'+yytext+'</td></tr>\n');contadorTokens++;return ',';}
@@ -273,22 +273,22 @@ LLAMADA_FUNCION:        'ID' '(' ')'                                            
 LISTA_EXPR:             LISTA_EXPR ',' EXPRESION                                             {$1.push($3);$$=$1;}
                     |   EXPRESION                                                            {$$=[$1];}
                     ;
-EXPRESION:              EXPRESION '+' EXPRESION   { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.SUMA); }
+EXPRESION:              EXPRESION '&&' EXPRESION  { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.AND); }
+                    |   EXPRESION '||' EXPRESION  { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.OR); }
+                    |   EXPRESION '^' EXPRESION  { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.XOR); }
+                    |   EXPRESION '+' EXPRESION   { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.SUMA); }
                     |   EXPRESION '-' EXPRESION   { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.RESTA); }
                     |   EXPRESION '*' EXPRESION   { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.MULTIPLICACION);}
                     |   EXPRESION '/' EXPRESION   { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.DIVISION);}
                     |   EXPRESION '<=' EXPRESION  { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.MENOR_IGUAL_QUE); }
                     |   EXPRESION '==' EXPRESION  { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.DOBLE_IGUAL); }
                     |   EXPRESION '!=' EXPRESION  { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.NO_IGUAL); }
+                    |   '!' EXPRESION              { $$ = API.nuevaOperUnitaria($2, TIPO_OPERACION.NOT); }
                     |   EXPRESION '>' EXPRESION   { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.MAYOR_QUE); }
                     |   EXPRESION '>=' EXPRESION  { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.MAYOR_IGUAL_QUE); }
                     |   EXPRESION '<' EXPRESION   { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.MENOR_IGUAL); }
-                    |   EXPRESION '&&' EXPRESION  { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.AND); }
-                    |   EXPRESION '||' EXPRESION  { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.OR); }
-                    |   EXPRESION '^' EXPRESION  { $$ = API.nuevaOperBinaria($1, $3, TIPO_OPERACION.XOR); }
                     |   EXPRESION '++'             { $$ = API.nuevaOperUnitaria($1, TIPO_OPERACION.INCREMENTO); }
                     |   EXPRESION '--'             { $$ = API.nuevaOperUnitaria($1, TIPO_OPERACION.DECREMENTO); }
-                    |   '!' EXPRESION              { $$ = API.nuevaOperUnitaria($2, TIPO_OPERACION.NOT); }
                     |   '-' EXPRESION %prec UMENOS { $$ = API.nuevaOperUnitaria($2, TIPO_OPERACION.NEGATIVO); }
                     |   'ID'                        { $$ = API.nuevoValor($1, TIPO_VALOR.IDENTIFICADOR); }
                     |   'NUMERO'                    { $$ = API.nuevoValor($1, TIPO_VALOR.NUMERO); }

@@ -48,6 +48,7 @@ identificador ([a-zA-ZñÑ_])[a-zA-Z0-9ñÑ_]*  // ER PARA RECONOCER IDENTIFICAD
 "return"                return 'RES_RETURN';
 "&&"                    return '&&';
 "||"                    return '||';
+"!="                    return '!=';
 "!"                     return '!';
 "^"                     return '^'
 ">="                    return '>=';
@@ -55,7 +56,6 @@ identificador ([a-zA-ZñÑ_])[a-zA-Z0-9ñÑ_]*  // ER PARA RECONOCER IDENTIFICAD
 ">"                     return '>';
 "<"                     return '<';
 "=="                    return '==';
-"!="                    return '!=';
 "."                     return '.';
 ";"                     return ';';
 ","                     return ',';
